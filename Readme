@@ -1,0 +1,6 @@
+install packages:
+install.package("map")
+install.package("fields")
+
+library("fields")
+

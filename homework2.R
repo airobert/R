@@ -1,3 +1,4 @@
+
 library('fields')
 library('deSolve')
 
@@ -26,6 +27,7 @@ arrow.plot(x, 0, dx, 0, arrow.ex = 0.05, length = 0.05, col = 'blue', lwd = 1, t
 
 xmin = -2; xmax = 2; xstep = 0.2
 ymin = -2; ymax = 2; ystep = 0.2
+
 
 x = seq(xmin, xmax, xstep)
 y = seq(ymin, ymax, ystep)
@@ -132,4 +134,3 @@ for (x_init in x_iter) {
 		
 	}
 }
-
