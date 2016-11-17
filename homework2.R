@@ -78,7 +78,7 @@ x_nullcline = function (xx, params){
 	d = params[4]
 	yy = rep (0, length(xx))
 	for (i in 1:length(xx)){
-		yy[i] = -1* b / a * xx[i]
+		yy[i] = -1* a / b * xx[i]
 	}
 	return (yy)
 }
