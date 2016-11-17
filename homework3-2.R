@@ -5,17 +5,17 @@ library('deSolve')
 
 # params = c(1,2,-2,-1)
 # params = c(0.7 , 0.8, 3 , 0)
-params = c(1.7 , 0.8, 3 , 0.4)
+params = c(1.7 , 0.8, -50 , 2, 0.4)
 
 
 dvdr = function(v, r, params) { # the vector contains the parameters a, b, c, d
 	a = params[1]
 	b = params[2]
 	c = params[3]
-	I = params[4]
+	I = params[5]
 	# return a vector contain dv and dr
-	d_v = c * (v - 1/3 * (v^3) + r + I)
-	d_r = -1 / c * (v - a + b * r)
+	d_v = 0.04 * (v^2) + 5 * v + 140 -r + I  
+	d_r = a * (b * v - r)
 	return (c(d_v, d_r))
 }
 
@@ -27,10 +27,10 @@ v_nullcline = function (vv, params){
 	a = params[1]
 	b = params[2]
 	c = params[3]
-	I = params[4]
+	I = params[5]
 	rr = rep (0, length(vv))
 	for (i in 1:length(vv)){
-		rr[i] = 1/3 * (vv[i])^3 - vv[i] - I 
+		rr[i] = 0.04 * (v^2) + 5 * v + 14 + I 
 	}
 	return (rr)
 }
@@ -40,10 +40,10 @@ r_nullcline = function (vv, params){
 	a = params[1]
 	b = params[2]
 	c = params[3]
-	I = params[4]
+	I = params[5]
 	rr = rep (0, length(vv))
 	for (i in 1:length(vv)){
-		rr[i] = (a - vv[i]) / b 
+		rr[i] = b * v
 	}
 	return (rr)
 }
@@ -64,8 +64,8 @@ arrow.plot(x, 0, dx, 0, arrow.ex = 0.05, length = 0.05, col = 'blue', lwd = 1, t
 
 
 
-xmin = -4; xmax = 4; xstep = 0.5
-ymin = -4; ymax = 4; ystep = 0.5
+xmin = -40; xmax = 40; xstep = 5
+ymin = -40; ymax = 40; ystep = 5
 
 
 x = seq(xmin, xmax, xstep)
@@ -110,6 +110,20 @@ ode_system = function (t, state, params) {
 }
 
 
+root = function (t, state, params) {
+	v = state[1]
+	return (v-30)
+}
+
+event = function(t, state, params) {
+	v = state [1]
+	u = state [2]
+	c = params [3]
+	d = params [4]
+	v = c
+	u = u+d
+	return (c(v,u) )
+}
 
 
 
@@ -120,14 +134,21 @@ y_iter = seq(ymin, ymax, ystep)
 for (x_init in x_iter) {
 	for (y_init in y_iter) {
 
-		times = seq(1, 40, 0.05)
+		times = seq(1, 5, 0.05)
 
 		points (x_init, y_init)
 
-		trajectory <- ode (y = c(y1=x_init, y2=y_init), 
+		# trajectory <- ode (y = c(y1=x_init, y2=y_init), 
+		# 	times = times,
+		# 	func = ode_system, 
+		# 	parms = params)
+
+		trajectory = ode (y = c(y1= x_init, y2 = y_init),
+			func = ode_system,
 			times = times,
-			func = ode_system, 
-			parms = params)
+			parms = params,
+			events = list(func = event, root = TRUE),
+			rootfun = root)
 
 		lines(trajectory[,2], trajectory[,3], col = 43)
 		
@@ -135,16 +156,18 @@ for (x_init in x_iter) {
 }
 
 
-times = seq(1, 30, 0.01)
+times = seq(1, 300, 0.01)
 
 points (1.1994, -0.62426)
 
-trajectory <- ode (y = c(y1= 1.1994, y2=-0.62426), 
-	times = times,
-	func = ode_system, 
-	parms = params)
+trajectory = ode (y = c(y1= x_init, y2 = y_init),
+			func = ode_system,
+			times = times,
+			parms = params,
+			events = list(func = event, root = TRUE),
+			rootfun = root)
 
-lines(trajectory[,2], trajectory[,3], col = 98)
+lines(trajectory[,1], trajectory[,2], col = 98)
 
 
 plot.new()
