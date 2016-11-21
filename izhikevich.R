@@ -1,8 +1,13 @@
 ##############################################
 # Use this part of the file to set the parameters/initialise values
 
+library('fields')
+library('deSolve')
+
 # set values for parameters (a, b and c and d or I)
-a <- 0.02; b <- 0.2; c <- -65; d <- 8; I=10;
+# a <- 0.02; b <- 0.2; c <- -65; d <- 8; I=10; # regular
+a <- 0.1; b <- 0.2; c <- -55; d <- 4; I=10; # fast
+# a <- 0.02; b <- 0.2; c <- -50; d <- 4; I=10; # Intrinsically bursting
 params <- c(a, b, c, d, I)                  
 v_init <- -65; u_init <- -18                # initial values of v and u
 vmin <- -80; vmax <- 40; vstep <- 5         # set min, max and stepsize for v
@@ -105,18 +110,37 @@ lines(trajectory[,2], trajectory[,3], col='black')
 # dev.copy(png, filename="~/Dropbox/fncm15/computer_labs/week2/RS_vt.png")
 # dev.off()
 
-# plot(trajectory[,1], trajectory[,2], xlab="t", ylab="v", col='black', type='l')
+plot(trajectory[,1], trajectory[,2], xlab="t", ylab="v", col='black', type='l')
 
 # dev.copy(png, filename="~/Dropbox/fncm15/computer_labs/week2/RS_pp.png")
 # dev.off()
 
 
-plot.new()
-frame()
 
-ts = trajectory[,1]
-vs = trajectory[,2]
+# x_iter = seq(xmin, xmax, xstep)
+# y_iter = seq(ymin, ymax, ystep)
 
-plot (ts,vs, type='n')
-lines(ts, vs, col = 98)
+# for (x_init in x_iter) {
+#   for (y_init in y_iter) {
+
+#     times = seq(1, 5, 0.05)
+
+#     points (x_init, y_init)
+
+#     # trajectory <- ode (y = c(y1=x_init, y2=y_init), 
+#     #   times = times,
+#     #   func = ode_system, 
+#     #   parms = params)
+
+#     trajectory = ode (y = c(y1= x_init, y2 = y_init),
+#       func = ode_system,
+#       times = times,
+#       parms = params,
+#       events = list(func = event, root = TRUE),
+#       rootfun = root)
+
+#     lines(trajectory[,2], trajectory[,3], col = 43)
+    
+#   }
+# }
 
