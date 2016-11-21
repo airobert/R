@@ -5,8 +5,9 @@ library('deSolve')
 
 # params = c(1,2,-2,-1)
 # params = c(0.7 , 0.8, 3 , 0)
-params = c(1.7 , 0.8, 3 , 0.4)
-
+# params = c(1.7 , 0.8, 3 , 0.4)
+params = c(0.5 , 0.8, 3 , -0.2)
+# a   <- 0.5;         b  <- 0.8;      c   <-    3;   I   <- -0.2;
 
 dvdr = function(v, r, params) { # the vector contains the parameters a, b, c, d
 	a = params[1]

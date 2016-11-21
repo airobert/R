@@ -102,11 +102,21 @@ trajectory <- ode(y = c(y1=v_init, y2=u_init),
 
 lines(trajectory[,2], trajectory[,3], col='black')
 
-dev.copy(png, filename="~/Dropbox/fncm15/computer_labs/week2/RS_vt.png")
-dev.off()
+# dev.copy(png, filename="~/Dropbox/fncm15/computer_labs/week2/RS_vt.png")
+# dev.off()
 
-plot(trajectory[,1], trajectory[,2], xlab="t", ylab="v", col='black', type='l')
+# plot(trajectory[,1], trajectory[,2], xlab="t", ylab="v", col='black', type='l')
 
-dev.copy(png, filename="~/Dropbox/fncm15/computer_labs/week2/RS_pp.png")
-dev.off()
+# dev.copy(png, filename="~/Dropbox/fncm15/computer_labs/week2/RS_pp.png")
+# dev.off()
+
+
+plot.new()
+frame()
+
+ts = trajectory[,1]
+vs = trajectory[,2]
+
+plot (ts,vs, type='n')
+lines(ts, vs, col = 98)
 
