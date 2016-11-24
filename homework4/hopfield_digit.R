@@ -1,9 +1,11 @@
-source("hopfield.R")
+source("/home/airobert/Project/Rhomework/hopfield.R")
 library(png)
 
 # digits = c(1,3,5,7,9)
+digits = c(0, 1,2,4,6,7, 9)
+# digits = c(0, 1,2,3,4,5,6,7,8,9)
 # digits = seq(0, 9, 1)
-digits = c(2,4,6,8,0)
+# digits = c(2,4,6,8,0)
 
 noise_rate = 0.8
 
@@ -11,7 +13,7 @@ noise_rate = 0.8
 patterns <- list()
 orgdim <- NULL
 for (i in digits) {
-	img <- readPNG(paste(as.character(i),'.png',sep=''))
+	img <- readPNG(paste('/home/airobert/Project/Rhomework/homework4/', as.character(i),'.png',sep=''))
 	orgdim <- dim(img)
 	dim(img) <- NULL
 	img <- img*2 - 1
@@ -32,7 +34,7 @@ for (i in 1:length(patterns)) {
 
 	noise = (runif(length(pattern), 0, 1) > noise_rate ) * 2. - 1	
 	input = pattern * noise
-	ret <- run.hopfield(hopnet, input, maxit = 1000, 
+	ret <- run.hopfield(hopnet, input, maxit = 10000, 
 						replace=F, stepbystep=F, topo=orgdim)
 
 	img <- pattern; dim(img) <- orgdim
